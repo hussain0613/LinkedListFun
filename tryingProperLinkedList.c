@@ -28,7 +28,7 @@ struct List{
 typedef struct List List;
 
 
-
+void initialize(List *list);
 void print(List list);
 void append(Value val, int type, List *list);
 
@@ -39,33 +39,33 @@ int main()
 	Value val;
 	El head, tail;
 	List list;
-	
-	
+	initialize(&list);
+
+
 	head.prev = NULL;
 	head.type = 0;
 	head.val.ch = "matha";
 	head.next = &tail;
-	
-	
+
+
 	tail.prev = &head;
 	tail.type = 0;
 	tail.val.ch = "i rock";
 	tail.next = NULL;
-	
-	
-	list.head = &head;
-	list.tail = &tail;
-	list.len = 2;
-	
+
+    list.head = &head;
+    list.tail = &tail;
+
+
 	for(i = 0; i < 5; i++){
 		val.i = i+1;
 		append(val, 1, &list);
 	}
-	
+
 	print(list);
-	
+
 	printf("%d\n", list.len);
-	
+
 	return 0;
 }
 
@@ -83,15 +83,22 @@ void print(List list)
 }
 
 
+void initialize(List *list)
+{
+    list->head=NULL;
+    list->tail = NULL;
+    list->len = 0;
+}
+
 void append(Value val, int type, List *list)
 {
 	El *current;
 	current = (El*) malloc(sizeof(El));
-	
+
 	current->type = type;
 	current->val = val;
 	current->next = NULL;
-	
+
 	if(list->head){
 		current->prev = list->tail;
 		(list->tail)->next = current;
